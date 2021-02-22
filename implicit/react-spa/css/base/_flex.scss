@@ -1,0 +1,21 @@
+@import "../variables.scss";
+
+.flex
+{
+    display: flex;
+
+    &.items-center
+    {
+        align-items: center;
+    }
+
+    & > .flex-to-content
+    {
+        flex: 0 0 auto;
+    }
+
+    & > .flex-to-fill
+    {
+        flex: 1 1 100%;
+    }
+}

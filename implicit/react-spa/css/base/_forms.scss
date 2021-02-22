@@ -1,0 +1,130 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+// ## RESET
+label,
+input,
+textarea,
+select
+{
+    font-family: $font-family;
+    display: block;
+    margin: 0px 0px;
+}
+
+input[type=radio],
+input[type=checkbox]
+{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+label
+{
+    font-weight: bold;
+    font-size: $text-sm;
+    color: $form-label;
+}
+
+.form-group
+{
+    & > * + *
+    {
+        margin-top: $spacing-xs;
+    }
+}
+
+.form-control
+{
+    display: block;
+    width: 100%;
+
+    padding: $input-padding-y $input-padding-x;
+    
+    font-size: $text-size;
+    color: $text-default;
+    background-color: $form-bg;
+
+    border: 1px solid $control-border-colour;
+    border-radius: $border-radius;
+
+    transition: background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+    &:focus
+    {
+        outline: 0;
+        border-color: $primary;
+        box-shadow: 0 0 0 0.2rem rgba($primary, .25);
+    }
+
+    &.chromeless
+    {
+        border: none;
+        padding: 0 0;
+        color: unset;
+
+        &:focus
+        {
+            outline: 0;
+            border: none;
+            box-shadow: none;
+        }
+    }
+}
+
+textarea.form-control
+{
+    min-height: 10rem;
+}
+
+.form-checkbox
+{
+    & > label
+    {
+        display: inline-block;
+        font-weight: normal;
+        font-size: $text-size;
+        color: $text-default;
+    }
+
+    & > input[type="checkbox"]
+    {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    & > label + input[type="checkbox"]
+    {
+        margin-left: $spacing-sm;
+    }
+
+    & > input[type="checkbox"] + label
+    {
+        margin-left: $spacing-sm;
+    }
+}
+
+.input-group
+{
+    display: flex;
+    align-items: center;
+    & > *
+    {
+        flex: 0 0 auto;
+    }
+    & > input[type=text]
+    {
+        flex: 1 1 auto;
+    }
+}
+
+label.required:after
+{
+    content: "*";
+    margin-left: 5px;
+    margin-top: -5px;
+    color: $red;
+}

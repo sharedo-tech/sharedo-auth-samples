@@ -1,0 +1,28 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+img.photo
+{
+    display: inline-block;
+    object-fit: contain;      
+    max-height: 250px;
+    width: 100%;
+
+    vertical-align: middle;
+    border: 2px solid $secondary;
+    background-color: $secondary;
+
+    &.unsized
+    {
+        width: unset;
+        height: unset;
+        max-height: unset;
+    }
+
+    &.preview
+    {
+        width: 100px;
+        height: unset;
+        max-height: 100px;
+    }
+}

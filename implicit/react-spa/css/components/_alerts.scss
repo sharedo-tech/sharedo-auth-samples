@@ -1,0 +1,47 @@
+@import "../variables.scss";
+
+.alert
+{
+    display: block;
+
+    padding: $spacing;
+    
+    border-radius: 5px;
+    border: 1px solid $gray-800;
+    
+    background-color: $gray-700;
+    color: white;
+
+    & > h4
+    {
+        display: inline-block;
+        font-size: $text-xs;
+        opacity: 0.5;
+        text-transform: uppercase;
+        margin: 0px 0px $spacing-xs 0px;
+    }
+
+    & > .alert-close
+    {
+        float: right;
+        opacity: 0.5;
+        cursor:pointer;
+
+        &:hover
+        {
+            opacity: unset;
+        }
+
+        &::after
+        {
+            clear:both;
+        }
+    }
+}
+
+.alert-danger
+{
+    border-color: darken($red, 10%);   
+    background-color: $red;
+    color: white;
+}

@@ -1,0 +1,48 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+div.blade
+{
+    display: none;
+
+    &.open
+    {
+        // Fill the entire screen on mobile
+        display: block;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+
+        z-index: $layer-blade;
+        
+        background-color: rgba($black, 0.3);
+
+        & > div.blade-content
+        {
+            position: fixed;
+            left: $spacing-sm;
+            top: $spacing-sm;
+            right: $spacing-sm;
+            bottom: $spacing-sm;
+
+            z-index: $layer-blade;
+
+            overflow: auto;
+            background-color: $text-default-bg;
+            border-radius: $border-radius;
+
+            @include shadow-lg;
+
+            @include mq-min-width-tablet
+            {
+                left: unset;
+                top: $spacing;
+                right: $spacing;
+                bottom: $spacing;
+                width: 450px;
+            }    
+        }
+    }
+}

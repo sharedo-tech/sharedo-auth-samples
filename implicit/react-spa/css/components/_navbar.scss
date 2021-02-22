@@ -1,0 +1,75 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+$nav-muted: rgba($text-inverted, 0.5);
+
+nav.navbar
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    user-select: none;
+
+    background-color: $gray-800;
+    color: $text-inverted;
+
+    padding: 1rem 1rem;
+    
+    &.fixed
+    {
+        padding: 0rem 1rem;
+        height: 60px;
+    }
+
+    & > .navbar-brand
+    {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        margin-right: $spacing-xl;
+
+        & A
+        {
+            text-decoration: none;
+            color: unset;
+        }
+
+        & h1
+        {
+            display: inline-block;
+        }
+    }
+
+    & > .navbar-group
+    {
+        flex: 1 1 auto;
+
+        display: flex;       
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: nowrap;
+
+        &.right
+        {
+            justify-content: flex-end;
+        }
+
+        & > a,
+        & > div
+        {
+            display: block;
+            margin: 0 $spacing-sm;
+        }
+
+        & > a
+        {
+            color: $nav-muted;
+            text-decoration: none;
+
+            &:hover
+            {
+                color: $text-inverted;
+            }
+        }
+    }
+}

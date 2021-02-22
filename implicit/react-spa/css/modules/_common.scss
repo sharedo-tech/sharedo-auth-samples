@@ -1,0 +1,44 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+DIV.module-title
+{
+    @include mq-min-width-desktop
+    {
+        margin-left: $drawer-width;
+    }
+}
+
+DIV.module-page
+{
+    z-index: $layer-normal;
+    padding: $guttering / 2;
+    
+    @include mq-min-width-desktop
+    {
+        padding: $guttering;
+        margin-left: $drawer-width;
+    }
+}
+
+DIV.module-dialog
+{
+    min-width: 320px;
+    max-width: 320px;
+    
+    margin: 10px auto;
+
+    padding: $guttering;
+    border-radius: $border-radius;
+
+    background-color: $white;
+
+    @include shadow-lg;
+
+    @include mq-min-width-tablet
+    {
+        max-width: 600px;
+        margin-top: 60px;
+    }
+}
+

@@ -1,0 +1,27 @@
+{
+    "name": "react-spa",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "build": "parcel build index.html --dist-dir ./dist",
+        "dev": "parcel index.html --port 8200"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-redux": "^7.2.2",
+        "react-router": "^5.2.0",
+        "react-router-dom": "^5.2.0",
+        "redux": "^4.0.5",
+        "redux-thunk": "^2.3.0",
+        "superagent": "^6.1.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.1.0",
+        "parcel": "^2.0.0-beta.1",
+        "sass": "^1.32.5"
+    }
+}

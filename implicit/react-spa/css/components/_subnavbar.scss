@@ -1,0 +1,32 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+nav.subnav
+{
+    display: flex;
+    margin-left: -1rem;
+    margin-right: -1rem;
+
+    & > A
+    {
+        display: block;
+        flex: 0 0 auto;
+        
+        padding: 0.25rem 0;
+        margin: 0 1rem;
+
+        color: $text-default;
+         
+        &:hover
+        {
+            text-decoration: none;
+            border-bottom: 3px solid $gray-400;
+        }
+
+        &.active,
+        &.active:hover
+        {
+            border-bottom: 3px solid $primary;
+        }
+    }
+}

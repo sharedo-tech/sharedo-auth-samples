@@ -1,0 +1,114 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+// ##### DROP DOWNS
+div.dropdown
+{
+    position: relative;
+    display: inline-block;
+
+    & > div.dropdown-opener
+    {
+        cursor: pointer;
+        border-radius: $border-radius;
+
+        padding: 0.125rem 0.5rem;
+
+        & .dropdown-toggle-icon
+        {
+            display: inline-block;
+        }
+    }
+
+    & > ul.dropdown-content
+    {
+        display: none;
+        position: absolute;
+        z-index: $layer-dropdown;
+        
+        padding: 0;
+        margin: 0.25rem 0 0 0;
+
+        border: 1px solid $gray-300;
+        border-radius: $border-radius;
+        
+        list-style: none;
+        
+        background-color: $text-default-bg;
+        color: $text-default;
+
+        width: 100%;
+        min-width: 200px;
+        
+        line-height: $default-line-height;
+        font-size: $text-size;
+        text-align: left;
+
+        @include shadow-lg;
+
+        & > li
+        {
+            padding: $spacing-xs;
+
+            @include mq-min-width-tablet
+            {
+                padding: $spacing-sm;
+            }
+
+            &.option
+            {
+                cursor: pointer;
+
+                &.option:hover
+                {
+                    background-color: $text-inverted-bg-primary;
+                    color: $text-inverted-primary;
+                }
+            }
+
+            &.separator
+            {
+                padding: 0px;
+                height: 1px;
+                border-bottom: 1px solid $control-border-colour;
+            }
+
+            &.heading
+            {
+                padding: $spacing-xs 0;
+                text-align: center;
+                font-size: $text-xs;
+                color: $text-muted;
+                text-transform: uppercase;
+            }
+
+            & > .fa
+            {
+                opacity: 0.6;
+            }
+        }
+
+        @include mq-min-width-tablet
+        {
+            width: 290px;
+        }
+    }
+
+    &.drop-right > ul.dropdown-content
+    {
+        right: 0px;
+    }
+
+    &.open > div.dropdown-opener
+    {
+        background-color: $text-inverted-bg-primary;
+        color: $text-inverted-primary;
+    }
+    
+    &.open > ul.dropdown-content
+    {
+        display: block;
+    }
+}
+
+

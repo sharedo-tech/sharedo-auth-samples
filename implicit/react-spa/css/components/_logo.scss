@@ -1,0 +1,41 @@
+@import "../variables.scss";
+
+// ##### LOGO
+.logo
+{
+    font-family: $font-family-logo;
+    font-size: 22px;
+    line-height: 22px;
+    letter-spacing: 0.025rem;
+    color: $black;
+    text-decoration: none;
+
+    & > span.fa
+    {
+        font-size: 12px;
+        color: $primary;
+
+        display: inline-block;
+        position: relative;
+        left: -5px;
+        top: -10px;
+    }
+
+    &.inverted
+    {
+        color: $text-inverted;
+    }
+
+    &.logo-xl
+    {
+        font-size: 44px;
+        line-height: 44px;
+        & > span.fa
+        {
+            font-size: 24px;
+            left: -10px;
+            top: -20px;
+        }
+    }
+
+}

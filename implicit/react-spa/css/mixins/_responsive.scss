@@ -1,0 +1,16 @@
+@import "../variables.scss";
+
+@mixin mq-min-width-tablet
+{
+    @media(min-width:$media-tablet){
+        @content;
+    }
+}
+
+@mixin mq-min-width-desktop
+{
+    @media(min-width:$media-desktop)
+    {
+        @content;
+    }
+}
