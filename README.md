@@ -8,6 +8,7 @@ Sharedo supports the following oAuth flows for obtaining access and refresh toke
     - Typically used for single page web apps, or other clients that cannot keep a secret.
     - Simple to implement with one step authentication
     - Will only provide access tokens - renewal requires a redirect to the auth server
+    - New browser policies concerning same site cookies, makes it difficult to renew access tokens seamlessly. (Normally, if a token expired, you would open a hidden iframe back to the auth server, which would immediately respond with a new access token. Same site cookie policy prevents this now, and the iframe would be deemed unauthenticated)
     - Consider using authorization code with proof key instead
     
 - Authorization Code
@@ -35,7 +36,7 @@ Sharedo supports the following oAuth flows for obtaining access and refresh toke
 - Authorization Code with Proof Key (PKCE)
     - Can be used for applications that cannot keep a secret - e.g. SPAs, mobile applications, installable desktop clients etc.
     - As authorization code flow, but allows for dynamic client secrets to prove auth code responses come back from the authorisation server
-    - Two step auehtnication - authentication/consent, token exchange
+    - Two step authentication - authentication/consent, token exchange
     - Allows for access and refresh tokens to be issued
 
 ## What does *can keep a secret* mean?
