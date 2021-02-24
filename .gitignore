@@ -6,6 +6,7 @@
 .parcel-cache
 dist/
 __tj-*.ps1
+package-lock.json
 
 # User-specific files
 *.rsuser

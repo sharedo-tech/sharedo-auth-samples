@@ -1,0 +1,21 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+.overlay-lock
+{
+    position: fixed;
+    left: 0; top: 0; right: 0; bottom: 0;
+
+    z-index: $layer-lock;
+    background-color: rgba($black, 0.5);
+    color: $white;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+    & > *
+    {
+        font-size: 3em;
+    }
+}

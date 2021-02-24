@@ -1,0 +1,103 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+nav.drawer
+{
+    & > div.drawer-overlay
+    {
+        display:none;
+    }
+
+    & > div.drawer-content
+    {
+        display: block;
+        position: fixed;
+    
+        left: -($drawer-width);
+        top: 60px;
+        bottom: 0px;
+        width: $drawer-width;
+
+        background-color: $gray-800;
+        color: $text-inverted;
+        z-index: $layer-drawer;
+        transition: left 0.15s ease-in-out;
+
+        overflow: auto;
+    }
+
+    &.open 
+    {
+        & > div.drawer-overlay
+        {
+            display:block;
+            position: fixed;
+
+            left: 0px; 
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+    
+            z-index: $layer-drawer;
+        
+            background-color: rgba($black, 0.3);    
+        }
+
+        & > div.drawer-content
+        {
+            left: 0px;
+            transition: left 0.15s ease-in-out;
+        }
+    }
+
+    @include mq-min-width-desktop
+    {
+        & > div.drawer-content
+        {
+            left: 0px;
+        }
+    }
+}
+
+nav.drawer > div.drawer-content > div.drawer-nav > ul
+{
+    margin: $spacing 0px 0px;
+    padding: 0px 0px;
+    list-style: none;
+
+    & > li.title
+    {
+        padding: $spacing-xs $spacing;
+        font-size: $text-xs;
+        color: $text-muted;
+        text-transform: uppercase;
+    }
+
+    & > li.link
+    {
+        & > a
+        {
+            display: block;
+            border-top: 1px solid lighten($gray-800, 10%);
+            border-bottom: 1px solid darken($gray-800, 10%);    
+    
+            padding: $spacing-sm ($spacing + $spacing-xs);
+    
+            color: $text-inverted;
+    
+            & > span.fa-fw
+            {
+                color: desaturate($primary, 25%);
+                margin-right: $spacing-sm;
+            }
+        }
+
+        & > a:hover
+        {
+            background-color: lighten($gray-800, 5%);
+            text-decoration:none;
+        }
+    }
+
+
+}

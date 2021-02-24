@@ -1,0 +1,102 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+div.row
+{
+    display: block;
+
+    & > div
+    {
+        display: block;
+    }
+
+    &.row-s-1
+    {
+        & > div
+        {
+            margin-bottom: 1rem;
+        }
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+
+    @include mq-min-width-desktop
+    {
+        display: flex;
+
+        & > div
+        {
+            flex: 1 1 auto;
+            
+            &.cs-1{ width: 8.33%; }
+            &.cs-2{ width: 16.66%; }
+            &.cs-3{ width: 25%; }
+            &.cs-4{ width: 33.33%; }
+            &.cs-5{ width: 41.66%; }
+            &.cs-6{ width: 50%; }
+            &.cs-7{ width: 58.33%; }
+            &.cs-8{ width: 66.66%; }
+            &.cs-9{ width: 75%; }
+            &.cs-10{ width: 83.33%; }
+            &.cs-11{ width: 91.66%; }
+            &.cs-12{ width: 100%; }
+
+            &.fit-rows
+            {
+                // This cell is split into N div.row, which we want to stretch
+                // vertically to fill this containing cell. We determine which
+                // div.row(s) to stretch by adding .fit-stretch
+                display: flex;
+                flex-direction: column;
+                
+                & > div.row:not(.fit-stretch)
+                {
+                    flex: 0 0 auto;
+                }
+
+                & > div.row.fit-stretch
+                {
+                    flex: 1 1 auto;
+                    //border: 1px solid red;
+                }
+            }
+
+            &.fit-child
+            {
+                // This cell will size the child DIV to the cell
+                display: flex;
+                flex-direction: column;
+
+                & > div
+                {
+                    flex: 1 1 auto;
+                    //border: 1px solid blue;
+                }
+            }
+        }
+
+        &.row-s-1
+        {
+            margin-bottom: 1rem;
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+            
+            & > div
+            {
+                padding: 0px 0.5rem;
+                margin: 0px 0px;
+            }
+        }
+
+    }
+
+/*  
+&.row-s-1 + div.row
+    {
+        margin-top: 1rem;
+    }*/
+
+}

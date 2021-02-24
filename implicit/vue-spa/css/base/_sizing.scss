@@ -1,0 +1,103 @@
+@import "../variables.scss";
+
+// ########## MARGINS
+.mx-auto
+{
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@mixin _margin($szName, $sz)
+{
+    .m-#{$szName} 
+    {
+        margin: #{$sz}rem;
+    };
+    
+    .ml-#{$szName}{ margin-left: #{$sz}rem; }
+    .mr-#{$szName}{ margin-right: #{$sz}rem; }
+    .mx-#{$szName}
+    {
+        margin-left: #{$sz}rem;
+        margin-right: #{$sz}rem;
+    }
+
+    .mt-#{$szName}{ margin-top: #{$sz}rem; }
+    .mb-#{$szName}{ margin-bottom: #{$sz}rem; }
+    .my-#{$szName}
+    {
+        margin-top: #{$sz}rem;
+        margin-bottom: #{$sz}rem;
+    }
+}
+
+@mixin _pad($szName, $sz)
+{
+    .p-#{$szName} 
+    {
+        padding: #{$sz}rem;
+    };
+    
+    .pl-#{$szName}{ padding-left: #{$sz}rem; }
+    .pr-#{$szName}{ padding-right: #{$sz}rem; }
+    .px-#{$szName}
+    {
+        padding-left: #{$sz}rem;
+        padding-right: #{$sz}rem;
+    }
+
+    .pt-#{$szName}{ padding-top: #{$sz}rem; }
+    .pb-#{$szName}{ padding-bottom: #{$sz}rem; }
+    .py-#{$szName}
+    {
+        padding-top: #{$sz}rem;
+        padding-bottom: #{$sz}rem;
+    }
+}
+
+@mixin _between($szName, $sz)
+{
+    [class*="sx-"] + .sx-#{$szName},
+    .child-sx-#{$szName} > * + *
+    {
+        margin-left: #{$sz}rem;
+    }
+
+    [class*="sy-"] + .sy-#{$szName},
+    .child-sy-#{$szName} > * + *
+    {
+        margin-top: #{$sz}rem;
+    }
+}
+
+@mixin mnp($szName, $sz)
+{
+    @include _margin($szName, $sz);
+    @include _pad($szName, $sz);
+    @include _between($szName, $sz);
+}
+
+@include mnp("0", 0);
+@include mnp("xxs", 0.125);
+@include mnp("xs", 0.25);
+@include mnp("sm", 0.50);
+@include mnp("sm1", 0.75);
+@include mnp("1", 1.00);
+@include mnp("lg1", 1.25);
+@include mnp("lg", 1.50);
+@include mnp("xl", 2.00);
+
+@include _margin("xxs-neg", -0.125);
+@include _margin("xs-neg", -0.25);
+@include _margin("sm-neg", -0.50);
+@include _margin("sm1-neg", -0.75);
+@include _margin("1-neg", -1.00);
+@include _margin("lg1-neg", -1.25);
+@include _margin("lg-neg", -1.50);
+@include _margin("xl-neg", -2.00);
+
+.hide-empty:empty
+{
+    display:none;
+}

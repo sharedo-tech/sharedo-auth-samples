@@ -1,0 +1,28 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+.hide-empty:empty
+{
+    display:none;
+}
+
+.sticky-top
+{
+    position:sticky;
+    z-index: $layer-navbar;
+    top: 0;
+}
+
+.d-block
+{
+    display: block;
+}
+
+.d-none
+{
+    display: none !important;
+}
+
+.o-hidden{ overflow: hidden; }
+
+.ow-anywhere{ overflow-wrap: anywhere; }

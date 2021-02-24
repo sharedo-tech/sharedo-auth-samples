@@ -1,0 +1,111 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+$profileImageSize:32px;
+$profileImageBorder: 2px;
+
+$profileImageWithBorder: ($profileImageSize + ($profileImageBorder * 2));
+
+// ##### USER PROFILE
+
+div.dropdown.user-profile
+{
+    & > div.dropdown-opener
+    {
+        padding-left: 0px;
+        white-space:nowrap;
+
+        & > img
+        {
+            margin-top: -($profileImageSize/2);
+            margin-bottom: -($profileImageSize/2);
+            margin-right: $spacing-sm;
+            margin-left: -$spacing-sm;
+        }
+
+        & > span:first-of-type
+        {
+            display: inline-block;
+            vertical-align: middle;
+            max-width: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        @include mq-min-width-tablet
+        {
+            & > span:first-of-type
+            {
+                max-width: 200px;
+            }
+        }
+
+        &:hover
+        {
+            color: $text-inverted;
+
+            & > img
+            {
+                @include shadow-lg-very-dark;
+            }
+        }
+
+        & > ul.dropdown-content
+        {
+            margin-top: $spacing-sm;
+            width: 280px;
+        }
+    }
+
+    &.open > div.dropdown-opener
+    {
+        & > img
+        {
+            @include shadow-lg-very-dark;
+        }
+    }
+}
+
+img.profile
+{
+    display: inline-block;
+    object-fit: cover;
+    width: $profileImageWithBorder;
+    height: $profileImageWithBorder;
+    border-radius: $profileImageSize;
+
+    vertical-align: middle;
+    border: $profileImageBorder solid $white;
+
+    &.unsized
+    {
+        width: unset;
+        height: unset;
+        border-radius: 50%;
+    }
+
+    &.large
+    {
+        width: 60px;
+        height: 60px;
+        border-radius: 25px;
+
+        @include mq-min-width-tablet
+        {
+            width: 60px;
+            height: 60px;
+            border-radius: 50px;
+        }
+    }
+
+    &.bc-secondary
+    {
+        border-color: $secondary;
+    }
+
+    &.ds-regular
+    {
+        @include shadow-regular;
+    }
+}

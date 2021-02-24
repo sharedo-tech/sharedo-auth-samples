@@ -1,0 +1,148 @@
+@import "../variables.scss";
+
+// ######## RESETS
+body
+{
+    margin: 0 0;
+    padding: 0 0;
+
+    background-color: $body-bg-colour;
+    
+    font-family: $font-family;
+    font-size: $text-size;
+    line-height: $default-line-height;
+    font-weight: 400;
+    color: $text-default;
+    text-align: left;    
+
+    min-width: 320px;
+}
+
+body.dark-bg
+{
+    background-color: $gray-800;
+    transition: background-color 0.15s ease-in-out;   
+}
+
+p, h1, h2, h3, h4, h5, h6
+{
+    margin: 0 0;
+    padding: 0 0;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 
+{
+    font-family: $font-family-headings;
+}
+
+// ######## HEADINGS
+h1
+{
+    font-size: $text-xl;
+}
+
+h2
+{
+    font-size: $text-lg;
+}
+
+
+// ######## ANCHOR
+
+a 
+{
+    color: $primary;
+    text-decoration: none;
+
+    &:hover
+    {
+        text-decoration: underline;
+    }
+
+    &.no-hover:hover
+    {
+        text-decoration: none;
+    }
+}
+
+// ######## TEXT-SIZES
+.text-xs
+{
+    font-size: $text-xs;
+}
+
+.text-sm
+{
+    font-size: $text-sm;
+}
+
+.text-lg
+{
+    font-size: $text-lg;
+}
+
+.text-xl
+{
+    font-size: $text-xl;
+}
+
+.text-xxl
+{
+    font-size: $text-xxl;
+}
+
+// ######## EMPHASIS AND DECORATION
+.emphasis
+{
+    font-weight: bold;
+}
+
+.upper
+{
+    text-transform: uppercase;
+}
+
+.badge
+{
+    font-size: 0.75rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.5rem;
+}
+
+// ######## ALIGNMENT
+.text-center
+{
+    text-align: center;
+}
+.text-right
+{
+    text-align: right;
+}
+
+.lh-default
+{
+    line-height: $default-line-height;
+}
+
+.lh-1
+{
+    line-height: 1;
+}
+
+.no-wrap
+{
+    white-space: nowrap;
+}
+
+.ellipsis
+{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.float-right
+{
+    float: right;    
+}

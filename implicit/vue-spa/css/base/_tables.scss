@@ -1,0 +1,109 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+table
+{
+    table-layout: fixed;
+
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: $text-sm;
+
+    width: 100%;
+
+    & > thead > tr > th,
+    & > tbody > tr > td
+    {
+        box-sizing: content-box;
+    }
+    
+    & > thead > tr > th
+    {
+        font-weight: normal;
+        color: $text-muted;
+        margin: 0 0;
+        padding: 0.75rem 0.5rem 0.5rem;
+        vertical-align: bottom;
+    }
+
+    & > tbody > tr  > td
+    {
+        margin: 0 0;
+        padding: 0.5rem 0.5rem;
+    }
+
+    & > thead > tr > th:first-child,
+    & > tbody > tr > td:first-child
+    {
+        padding-left: 1rem;
+    }
+
+    & > thead > tr > th:last-child,
+    & > tbody > tr > td:last-child
+    {
+        padding-right: 1rem;
+    }
+
+    &.no-indents
+    {
+        & > thead > tr > th:first-child,
+        & > tbody > tr > td:first-child
+        {
+            padding-left: 0.5rem;
+        }
+    
+        & > thead > tr > th:last-child,
+        & > tbody > tr > td:last-child
+        {
+            padding-right: 0.5rem;
+        }    
+    }
+
+    @include mq-min-width-tablet
+    {
+        & > thead > tr > th
+        {
+            padding: 0.75rem 1rem 0.5rem;
+        }
+        & > tbody > tr > td
+        {
+            padding: 0.5rem 1rem;
+        }
+
+        & > thead > tr > th:first-child,
+        & > tbody > tr > td:first-child
+        {
+            padding-left: 2rem;
+        }
+        
+        & > thead > tr > th:last-child,
+        & > tbody > tr > td:last-child
+        {
+            padding-right: 2rem;
+        }
+    }
+
+    & > thead > tr:last-child,
+    & > tbody > tr:last-child
+    {
+        border-bottom: 1px solid $gray-200;
+    }
+    & > tbody > tr + tr
+    {
+        border-top: 1px solid $gray-200;
+    }
+
+    &.hover > tbody > tr:hover
+    {
+        transition: background-color 0.5s ease;
+        background-color: $gray-100;
+        cursor: default;
+    }
+
+    &.cells-top > tbody > tr > td
+    {
+        vertical-align: top;
+    }
+
+}
+
