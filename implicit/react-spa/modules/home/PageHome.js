@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 
 class PageHome extends React.Component
 {
@@ -7,10 +8,17 @@ class PageHome extends React.Component
         return (
             <div className="module module-page">
                 <h1 className="mb-1">Home</h1>
-                <div>TODO</div>
+                <div>Welcome to my-sharedo {this.props.name}</div>
             </div>
         );
     }
 }
 
-export default PageHome;
+const mapStateToProps = (state, ownProps) => ({
+    name: state.auth.name
+});
+
+const mapActionsToProps = ({
+});
+
+export default connect(mapStateToProps, mapActionsToProps)(PageHome);

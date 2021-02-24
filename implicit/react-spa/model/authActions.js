@@ -1,6 +1,10 @@
+import 
+{
+    AUTH_TOKEN_RECEIVED, 
+    AUTH_PROFILE_LOAD
+} from "./actions";
 
-export const AUTH_TOKEN_RECEIVED = "AUTH_TOKEN_RECEIVED";
-export const AUTH_PROFILE_LOAD = "AUTH_PROFILE_LOAD";
+import authAgent from "./agents/authAgent";
 
 export function setToken(token)
 {
@@ -9,18 +13,14 @@ export function setToken(token)
         payload: token
     };
 }
-
+window.st = setToken;
 export function loadProfile()
 {
     return dispatch =>
     {
-        return new Promise((resolve, reject) =>
+        return authAgent.getProfile().then(r =>
         {
-            setTimeout(() =>
-            {
-                dispatch({ type: AUTH_PROFILE_LOAD, payload: { name: "TODO: Load profile" } });
-                resolve();
-            }, 5000);
+            dispatch({ type: AUTH_PROFILE_LOAD, payload: { name: r.fullName, userId: r.userId }});
         });
     }
 }

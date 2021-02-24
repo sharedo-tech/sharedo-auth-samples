@@ -2,12 +2,13 @@ import
 {
     AUTH_TOKEN_RECEIVED,
     AUTH_PROFILE_LOAD
-} from "./authActions";
+} from "./actions";
 
 const initialState =
 {
     token: null,
-    name: null
+    name: null,
+    userId: null
 };
 
 export default function(state = initialState, action)
@@ -23,7 +24,8 @@ export default function(state = initialState, action)
         case AUTH_PROFILE_LOAD:
             return {
                 ... state,
-                name: action.payload.name
+                name: action.payload.name,
+                userId: action.payload.userId
             };
 
         default:
