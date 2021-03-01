@@ -6,6 +6,10 @@ function doFetch(url, request, resolve, reject)
     {
         if (!response.ok)
         {
+            if( response.status === 401 )
+            {
+                implicit.redirectToLogin();
+            }
             reject(response.statusText);
             return;
         }

@@ -1,6 +1,7 @@
 import { reactive } from "vue";
 import settings from "../settings";
 import { get } from "./fetchWrapper";
+import { router } from "../Router";
 
 var auth = reactive({
     token: null,
@@ -46,7 +47,7 @@ function receiveOAuthResponse()
     if (!token) return false;
 
     auth.token = token;
-    history.pushState(null, null, decodeURIComponent(redirect));
+    router.setPath(decodeURIComponent(redirect));
     return true;
 };
 
@@ -71,9 +72,8 @@ function authorise()
     });
 };
 
-window.get = get;
-
 export default {
     auth,
-    authorise
+    authorise,
+    redirectToLogin
 }

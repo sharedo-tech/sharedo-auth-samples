@@ -2,24 +2,18 @@
     <div className="sticky-top">
         <TopNav />
     </div>
-<!--                <Switch>
-                    <Route path="/" exact component={PageHome} />
-                    <Route path="/tasks" exact component={PageTasks} />
-                    <Route component={Error404} />
-                </Switch>
-
-    <div>Hello 1</div>
-    <div>Hello 3</div>-->
+    <Router />
 </template>
 
 
 
 <script>
 import TopNav from "./components/TopNav.vue";
+import Router from "./Router";
 
 export default 
 {
     name: "App",
-    components: { TopNav }
+    components: { TopNav, Router }
 };
 </script>

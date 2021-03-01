@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { router } from "../Router";
 export default {
     props: ["to"],
     emits: ["click"],
@@ -13,7 +14,7 @@ export default {
         clicked(e)
         {
             e.preventDefault();
-            history.pushState(null, null, this.to);
+            router.setPath(this.to);
             this.$emit("click");
         }
     }
