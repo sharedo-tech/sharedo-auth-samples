@@ -1,18 +1,21 @@
-import { h, reactive } from "vue";
+import { reactive } from "vue";
 
-import NotFound from "./modules/NotFound.vue";
-import Home from "./modules/Home.vue";
-import Tasks from "./modules/Tasks.vue";
-
-export const router =
+const router = 
 {
     state: reactive({
         path: window.location.pathname
     }),
 
-    setPath(newPath)
+    setPath(newPath, replace)
     {
-        history.pushState(null, null, newPath);
+        if( replace )
+        {
+            history.replaceState(null, null, newPath);
+        }
+        else
+        {
+            history.pushState(null, null, newPath);
+        }
         this.state.path = newPath;
     },
 
@@ -25,32 +28,6 @@ export const router =
     }
 };
 
-const routes =
-{
-    "/": Home,
-    "/tasks": Tasks
-};
+window.router = router;
 
-export default
-    {
-        name: "Router",
-        data()
-        {
-            return { router: router };
-        },
-        computed:
-        {
-            view()
-            {
-                return routes[this.router.state.path] || NotFound;
-            }
-        },
-        created()
-        {
-            router.startWatching();
-        },
-        render()
-        {
-            return h(this.view);
-        }
-    };
+export default router;

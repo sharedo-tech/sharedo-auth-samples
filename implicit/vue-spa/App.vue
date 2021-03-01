@@ -2,18 +2,42 @@
     <div className="sticky-top">
         <TopNav />
     </div>
-    <Router />
+    <component :is="viewComponent"/>
 </template>
 
 
 
 <script>
+import router from "./router";
 import TopNav from "./components/TopNav.vue";
-import Router from "./Router";
+import NotFound from "./modules/NotFound.vue";
+import Home from "./modules/Home.vue";
+import Tasks from "./modules/Tasks.vue";
+
+const routes =
+{
+    "/": Home,
+    "/tasks": Tasks
+}
 
 export default 
 {
     name: "App",
-    components: { TopNav, Router }
+    components: { TopNav },
+    data()
+    {
+        return{ router: router };
+    },
+    computed:
+    {
+        viewComponent()
+        {
+            return routes[this.router.state.path] || NotFound;
+        }
+    },
+    created()
+    {
+        router.startWatching();
+    }
 };
 </script>

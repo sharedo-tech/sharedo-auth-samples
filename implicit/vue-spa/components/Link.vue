@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { router } from "../Router";
+import router from "../router";
+
 export default {
     props: ["to"],
     emits: ["click"],
