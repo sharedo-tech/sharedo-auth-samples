@@ -1,0 +1,122 @@
+﻿<Window x:Class="Sharedo.OutlookSample.Forms.Configuration.ConfigurationWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sharedo.OutlookSample.Forms.Configuration"
+             mc:Ignorable="d" 
+             Width="500" Height="600" ResizeMode="NoResize" 
+             Title="Sharedo configuration" 
+             WindowStartupLocation="CenterOwner" 
+             Icon="pack://application:,,,/Sharedo.OutlookSample;component/Resources/do.png" SizeToContent="Height">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../CommonResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="GroupBox">
+                <Setter Property="HeaderTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" FontWeight="Bold"/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="5,0,5,0"/>
+                <Setter Property="Padding" Value="10,5,10,5"/>
+            </Style>
+            
+            <Style TargetType="StackPanel" x:Key="ButtonStack">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="Margin" Value="0,5,0,5"/>
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="ErrorText">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="Red"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Image Height="50" Source="pack://application:,,,/Sharedo.OutlookSample;component/Resources/sharedo-logo.png" 
+                   HorizontalAlignment="Left"
+                   Margin="10,10,10,10"/>
+
+            <Grid x:Name="_errorPanel" Grid.Column="1" Margin="10,10,10,10" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock FontFamily="{StaticResource FontAwesome}" FontSize="20px" Style="{StaticResource ErrorText}" 
+                           Margin="0,0,10,0" VerticalAlignment="Top">&#xf071;</TextBlock>
+                
+                <TextBlock x:Name="_errorText" Style="{StaticResource ErrorText}" Grid.Column="1" 
+                           TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Padding="0,0,0,0">
+                    Something that isn't quite right
+                </TextBlock>
+            </Grid>
+        </Grid>
+
+        <GroupBox x:Name="_noAccountLinked" Header="Link your account" Margin="10,0,10,10">
+            <StackPanel>
+                <TextBlock Margin="5,5,5,5">You have not yet linked a sharedo account, click below to link your account.</TextBlock>
+                <Button x:Name="_btnLinkAccount" Margin="5,0,5,5">Link Account</Button>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="_accountLinked" Header="Linked account account" Margin="10,0,10,10">
+            <StackPanel>
+                <TextBlock Margin="5,5,5,5">You are signed into sharedo with this account;</TextBlock>
+                <TextBlock x:Name="_identity" Margin="5,0,5,5" FontWeight="Bold">Account name</TextBlock>
+                <TextBlock x:Name="_name" Margin="5,0,5,5">Firstname/Surname</TextBlock>
+                <Button x:Name="_btnUnlinkAccount" Margin="5,0,5,5">Unlink Account</Button>
+            </StackPanel>
+        </GroupBox>
+        
+        <GroupBox Header="Connect to sharedo server" Margin="10,0,10,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <Label Grid.Row="0" Grid.Column="0" Margin="0,10,10,5">Sharedo server:</Label>
+                <TextBox x:Name="_sharedoServer" Grid.Row="0" Grid.Column="1" Margin="0,10,5,5"></TextBox>
+
+                <Label Grid.Row="1" Grid.Column="0" Margin="0,5,10,5">Identity server:</Label>
+                <TextBox x:Name="_identityServer" Grid.Row="1" Grid.Column="1" Margin="0,5,5,5"></TextBox>
+
+                <StackPanel Style="{StaticResource ButtonStack}" Grid.Row="2" Grid.ColumnSpan="2">
+                    <Button x:Name="_btnChangeServer">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="{StaticResource FontAwesome}" VerticalAlignment="Center" Margin="0,0,5,0">&#xf09c;</TextBlock>
+                            <TextBlock VerticalAlignment="Center">Change server</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="_btnConnect">Connect</Button>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </StackPanel>
+</Window>
