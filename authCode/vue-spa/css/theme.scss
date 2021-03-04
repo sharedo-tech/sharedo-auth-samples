@@ -1,0 +1,28 @@
+// Initialisation
+@import "normalize.scss";
+
+*{ box-sizing: border-box; }
+
+// Include font awesome awesomeness
+$fa-font-path: "./webfonts";
+@import "_fontawesome5.12/fontawesome.scss";
+@import "_fontawesome5.12/regular.scss";
+@import "_fontawesome5.12/solid.scss";
+
+// Configuration vars
+@import "variables.scss";
+
+// Mixins
+@import "mixins/mixins.scss";
+
+// Base
+@import "base/base.scss";
+
+// Components
+@import "components/components.scss";
+
+// Modules
+@import "modules/modules.scss";
+
+// Blades
+@import "blades/blades.scss";

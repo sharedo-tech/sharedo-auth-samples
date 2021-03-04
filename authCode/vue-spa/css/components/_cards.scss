@@ -1,0 +1,24 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+// ##### CARDS
+div.card
+{
+    background-color: $text-default-bg;
+    @include shadow-lg;
+    
+    @include mq-min-width-tablet
+    {
+        &.mw-320
+        {
+            max-width: 320px;
+        }
+    }
+}
+
+div.page-card
+{
+    background-color: $text-default-bg;
+    @include shadow-regular;
+}
+

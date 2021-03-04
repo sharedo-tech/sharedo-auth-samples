@@ -1,0 +1,45 @@
+@import "../variables.scss";
+@import "../mixins/mixins.scss";
+
+.mq-mobile-or-lower,
+.only-mobile
+{
+    @include mq-min-width-tablet
+    {
+        display: none;
+    }
+}
+
+.mq-tablet-or-lower,
+.mq-tablet-dn,
+.hide-desktop
+{
+    @include mq-min-width-desktop
+    {
+        display: none;
+    }
+}
+
+.mq-tablet-or-higher,
+.mq-tablet-up,
+.hide-mobile
+{
+    display: none;
+
+    @include mq-min-width-tablet
+    {
+        display: revert
+    }
+}
+
+.mq-desktop-or-higher,
+.mq-desktop-up,
+.only-desktop
+{
+    display: none;
+
+    @include mq-min-width-desktop
+    {
+        display: revert;
+    }
+}

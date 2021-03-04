@@ -1,0 +1,31 @@
+{
+    "name": "vue-spa",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "build": "parcel build index.html --dist-dir ./dist",
+        "dev": "parcel index.html --port 8200"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "vue": "^3.0.5"
+    },
+    "devDependencies": {
+        "@parcel/optimizer-cssnano": "^2.0.0-nightly.609",
+        "@parcel/optimizer-htmlnano": "^2.0.0-nightly.609",
+        "@parcel/packager-css": "^2.0.0-nightly.609",
+        "@parcel/packager-html": "^2.0.0-nightly.609",
+        "@parcel/transformer-css": "^2.0.0-nightly.609",
+        "@parcel/transformer-html": "^2.0.0-nightly.609",
+        "@parcel/transformer-postcss": "^2.0.0-nightly.609",
+        "@parcel/transformer-posthtml": "^2.0.0-nightly.609",
+        "@parcel/transformer-sass": "^2.0.0-nightly.609",
+        "@parcel/transformer-vue": "^2.0.0-nightly.2231",
+        "autoprefixer": "^10.1.0",
+        "parcel": "^2.0.0-beta.1",
+        "postcss": "^8.2.6",
+        "sass": "^1.32.5"
+    }
+}

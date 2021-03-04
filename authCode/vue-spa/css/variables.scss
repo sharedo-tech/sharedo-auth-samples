@@ -1,0 +1,111 @@
+﻿// ########## COLOURS
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+/*$brand-100: #eef6ec;
+$brand-200: #d6ecd2;
+$brand-300: #b7ddb0;
+$brand-400: #99d18f;
+$brand-500: #7bc86c;
+$brand-600: #61bd4f;
+$brand-700: #5aac44;
+$brand-800: #519839;
+$brand-900: #49852e;
+$brand-999: #3f6f21;*/
+
+$brand-100: #ffedcf;
+$brand-200: #ffdb9f;
+$brand-300: #ffca6f;
+$brand-400: #ffb83f;
+$brand-500: #ffa60f;
+$brand-600: #e18e00;
+$brand-700: #b47100;
+$brand-800: #875500;
+$brand-900: #5a3900;
+$brand-999: #2d1c00;
+
+$primary: $brand-600;
+$primary-dark: $brand-900;
+
+$secondary: $gray-600;
+$secondary-dark: $gray-900;
+
+// General colours
+$black: #000;
+$white: #fff;
+$red: #a22;
+$yellow: #aa2;
+
+$text-default: $gray-900;
+$text-default-bg: $white;
+$text-inverted: $white;
+$text-inverted-bg: $gray-900;
+$text-muted: $gray-500;
+$text-inverted-bg-primary: $primary;
+$text-inverted-primary: $white;
+$body-bg-colour: $gray-200;
+$form-label: $gray-600;
+$text-info: #0af;
+
+// ########## BORDERS
+$border-radius: 0.25rem;
+
+// ########## SIZES
+$spacing: 1rem;
+$spacing-xs: $spacing * 0.25;
+$spacing-sm: $spacing * 0.5;
+$spacing-lg: $spacing * 1.5;
+$spacing-xl: $spacing * 2;
+$guttering: $spacing * 2;
+
+// ########## TYPOGRAPHY
+// General font
+$font-family: "Lato", sans-serif;
+
+// Headings
+$font-family-headings: "Raleway", sans-serif;
+
+// Logos
+$font-family-logo: "Georgia", "Times New Roman", serif;
+
+// Sizing
+$default-line-height: 1.5;
+$text-size: 1rem;
+
+$text-xs: ($text-size * 0.75);
+$text-sm: ($text-size * 0.875);
+
+$text-lg: ($text-size * 1.25);
+$text-xl: ($text-size * 1.50);
+$text-xxl: ($text-size * 2.00);
+
+// Forms
+$form-bg: $white;
+$control-border-colour: $gray-500;
+$input-padding-x: ($spacing * 0.75);
+$input-padding-y: $spacing-sm;
+
+// Breakpoints
+$media-mobile: 320px;
+$media-tablet: 768px;
+$media-desktop: 900px;
+
+// Layout
+$static-navbar-height: 60px;
+$drawer-width: 220px;
+
+
+// Layers
+$layer-normal: auto;
+$layer-dropdown: 5000;
+$layer-navbar: 6000;
+$layer-drawer: 10000;
+$layer-blade: 20000;
+$layer-lock: 30000;
