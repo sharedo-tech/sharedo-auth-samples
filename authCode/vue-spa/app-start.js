@@ -12,6 +12,6 @@ initialise().then(() =>
         const app = createApp(App);
         const vm = app.mount("#app-host");
     });
-});
+}, err => { document.write("<div>" + err + "</div>"); });
 
 

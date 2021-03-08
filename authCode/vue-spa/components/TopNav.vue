@@ -9,7 +9,9 @@
             </h1>
         </div>
         <div className="navbar-group right">
-            {{ profile.name || "Who are you?" }}
+            <span>{{ profile.name || "Who are you?" }}</span>
+            <span v-if="profile.name">&nbsp;|&nbsp; <a href="#" @click="signOut">Sign out</a></span>
+
         </div>
     </nav>
 
@@ -30,6 +32,7 @@
 <script>
 import Link from "./Link.vue";
 import TopNavItem from "./TopNavItem.vue";
+import {logout} from "../service/authcode";
 import {profile} from "../service/profile";
 
 export default {
@@ -58,6 +61,11 @@ export default {
         closeDrawer()
         {
             this.open = false;
+        },
+        signOut(e)
+        {
+            e.preventDefault();
+            logout();
         }
     }
 };

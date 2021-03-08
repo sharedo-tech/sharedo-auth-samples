@@ -1,31 +1,55 @@
+<template>
+    <div v-if="authorised" className="sticky-top">
+        <TopNav />
+    </div>
+    <component :is="viewComponent"/>
+</template>
+
 <script>
-import {h} from "vue";
+import router from "./router";
 import {auth} from "./service/authcode";
 
-import AppAuthorised from "./AppAuthorised.vue";
+import TopNav from "./components/TopNav.vue";
+import NotFound from "./modules/NotFound.vue";
+import NotAuthorised from "./modules/NotAuthorised.vue";
+import Home from "./modules/Home.vue";
+import Tasks from "./modules/Tasks.vue";
 
-const NotAuthorised = { template: "<p>You are not authorised</p>"};
-
+const routes =
+{
+    "/": Home,
+    "/tasks": Tasks
+}
 
 export default 
 {
     name: "App",
-    components: { },
+    components: { TopNav },
     data()
     {
-        return{ auth: auth };
+        return{ 
+            auth: auth,
+            router: router 
+        };
     },
     computed:
     {
+        authorised()
+        {
+            return !!auth.accessToken;
+        },
         viewComponent()
         {
-            return auth.accessToken ? AppAuthorised : NotAuthorised;             
+            // Not authorised yet - don't render
+            if( !this.authorised ) return NotAuthorised;
+
+            // Authorised - pick the route component
+            return routes[this.router.state.path] || NotFound;
         }
     },
-    render()
+    created()
     {
-        return h(this.viewComponent);
+        router.startWatching();
     }
 };
 </script>
-

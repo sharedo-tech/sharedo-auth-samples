@@ -2,91 +2,67 @@ import { reactive } from "vue";
 import router from "../router";
 import settings from "../settings";
 
+/**
+ * The current token auth state. This is made reactive
+ * so we can swap the vue views depending on if you're
+ * signed in or not.
+ */
 export const auth = reactive({
     accessToken: null,
     refreshToken: null
 });
 
-export function redirectToLogin()
+/**
+ * Initialises authentication - will redirect to identity
+ * if the user is not signed in/we have no tokens. If we have 
+ * tokens in storage, loads them. If we are receiving an oauth
+ * auth code response, processes it.
+ * @returns promise
+ */
+export function initialise()
 {
-    // Get the requested path from the url, we'll restore it later
-    var state = window.location.pathname;
+    return new Promise((resolve, reject) =>
+    {
+        // Are we receiving a code response?
+        if (window.location.pathname.toLowerCase() === "/oauthreply")
+        {
+            receiveCode().then(
+                () =>
+                {
+                    resolve();
+                },
+                reject);
+            return;
+        };
 
-    var url = settings.identity;
-    url += "/connect/authorize";
-    url += `?client_id=${settings.clientId}`;
-    url += "&scope=sharedo offline_access";
-    url += "&response_type=code"
-    url += `&redirect_uri=${encodeURIComponent(settings.redirectUri)}`;
-    url += `&state=${encodeURIComponent(state)}`;
+        // Note: Here we're loading tokens from session storage as a complete
+        // Note: example. Normally we wouldn't store tokens at all except in memory
+        getTokensFromStorage();
+        if (auth.accessToken && auth.refreshToken)
+        {
+            resolve();
+            return;
+        }
 
-    window.location.href = url;
-};
-
-export function clearTokens()
-{
-    updateTokens(null, null);
+        // Not receiving and nothing stored - go login please.
+        redirectToLogin();
+    });
 }
 
 function getTokensFromStorage()
 {
     var at = sessionStorage.getItem("_at");
     var rt = sessionStorage.getItem("_rt");
-    if( at ) auth.accessToken = at;
-    if( rt ) auth.refreshToken = rt;
+    if (at) auth.accessToken = at;
+    if (rt) auth.refreshToken = rt;
 }
 
-export function updateTokens(access, refresh)
-{
-    // Note: Here we're also saving tokens to session storage
-    // Note: so a reload doesn't require obtaining tokens again.
-    // Note: Normally, we wouldn't do this without acknowleding the
-    // Note: risk of storing the tokens in the browser.
-    if( access )
-    {
-        sessionStorage.setItem("_at", access);
-        auth.accessToken = access;
-    }
-    else
-    {
-        sessionStorage.removeItem("_at");
-        auth.accessToken = null;
-    }
-
-    if( refresh )
-    {
-        sessionStorage.setItem("_rt", refresh);
-        auth.refreshToken = refresh;
-    }
-    else
-    {
-        sessionStorage.removeItem("_rt");
-        auth.refreshToken = null;
-    }
-}
-
-export function logout()
-{
-    // TODO: call the token endpoint to invalidate the refresh token
-    clearTokens();
-    return Promise.resolve();
-}
-
-function getQueryParams()
-{
-    var url = window.location.href;
-    var result = {};
-    var params = url.substring(url.indexOf("?") + 1).split("&");
-
-    params.forEach(v =>
-    {
-        var kvp = v.split("=");
-        result[kvp[0]] = decodeURIComponent(kvp[1]);
-    });
-
-    return result;
-}
-
+/**
+ * Internal method that receives an auth code response. If it's a valid
+ * response, attempts to exchange the auth code for access and refresh
+ * tokens that can then be used to call the APIs.
+ * @returns promise
+ */
 function receiveCode()
 {
     return new Promise((resolve, reject) =>
@@ -95,7 +71,8 @@ function receiveCode()
         var q = getQueryParams();
         if (!q.code)
         {
-            reject("No code presented in oAuth response");
+            console.error("No code presented in oAuthResponse");
+            reject(q.error || "Error");
             return;
         }
 
@@ -139,12 +116,31 @@ function receiveCode()
     });
 };
 
+function getQueryParams()
+{
+    var url = window.location.href;
+    var result = {};
+    var params = url.substring(url.indexOf("?") + 1).split("&");
+
+    params.forEach(v =>
+    {
+        var kvp = v.split("=");
+        result[kvp[0]] = decodeURIComponent(kvp[1]);
+    });
+
+    return result;
+}
+
+/**
+ * Attempts to use the refresh token to obtain a new access token
+ * @returns promise
+ */
 export function getNewTokens()
 {
     return new Promise((resolve, reject) =>
     {
         console.log("Requesting new access token");
-        if( !auth.refreshToken )
+        if (!auth.refreshToken)
         {
             console.warn("No refresh token available");
             reject();
@@ -192,32 +188,112 @@ export function getNewTokens()
     });
 }
 
-export function initialise()
+/**
+ * Invalidates any tokens that are in use, signing the user out.
+ * @returns promise
+ */
+export function logout()
 {
     return new Promise((resolve, reject) =>
     {
-        // Are we receiving a code response?
-        if (window.location.pathname.toLowerCase() === "/oauthreply")
+        var jobs = [];
+        // Revoke the access token
+        if (auth.accessToken)
         {
-            receiveCode().then(() =>
-            {
-                resolve();
-            });
-            return;
-        };
-
-        // Note: Here we're loading tokens from session storage as a complete
-        // Note: example. Normally we wouldn't store tokens at all except in memory
-        getTokensFromStorage();
-        if( auth.accessToken && auth.refreshToken )
-        {
-            resolve();
-            return;
+            jobs.push(fetch(`${settings.identity}/connect/revocation`,
+                {
+                    method: "POST",
+                    cache: "no-cache",
+                    headers:
+                    {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "client_id=" + settings.clientId +
+                        "&client_secret=" + settings.clientSecret +
+                        "&token=" + auth.accessToken +
+                        "&token_type_hint=access_token"
+                }));
         }
 
-        // Not receiving and nothing stored - go login please.
-        redirectToLogin();
+        // Revoke the refresh token
+        if (auth.refreshToken)
+        {
+            jobs.push(fetch(`${settings.identity}/connect/revocation`,
+                {
+                    method: "POST",
+                    cache: "no-cache",
+                    headers:
+                    {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "client_id=" + settings.clientId +
+                        "&client_secret=" + settings.clientSecret +
+                        "&token=" + auth.refreshToken +
+                        "&token_type_hint=refresh_token"
+                }));
+        }
+
+        Promise.all(jobs).then(() =>
+        {
+            updateTokens(null, null);
+            resolve();
+        });
     });
 }
+
+/**
+ * Redirects the user to the login page on sharedo's identity server
+ */
+export function redirectToLogin()
+{
+    // Get the requested path from the url, we'll restore it later
+    var state = window.location.pathname;
+
+    var url = settings.identity;
+    url += "/connect/authorize";
+    url += `?client_id=${settings.clientId}`;
+    url += "&scope=sharedo offline_access";
+    url += "&response_type=code"
+    url += `&redirect_uri=${encodeURIComponent(settings.redirectUri)}`;
+    url += `&state=${encodeURIComponent(state)}`;
+
+    window.location.href = url;
+};
+
+function updateTokens(access, refresh)
+{
+    // Note: Here we're also saving tokens to session storage
+    // Note: so a reload doesn't require obtaining tokens again.
+    // Note: Normally, we wouldn't do this without acknowleding the
+    // Note: risk of storing the tokens in the browser.
+    if (access)
+    {
+        sessionStorage.setItem("_at", access);
+        auth.accessToken = access;
+    }
+    else
+    {
+        sessionStorage.removeItem("_at");
+        auth.accessToken = null;
+    }
+
+    if (refresh)
+    {
+        sessionStorage.setItem("_rt", refresh);
+        auth.refreshToken = refresh;
+    }
+    else
+    {
+        sessionStorage.removeItem("_rt");
+        auth.refreshToken = null;
+    }
+}
+
+
+
+
+
+
+
 
 
