@@ -1,13 +1,13 @@
 <template>
     <div class="module module-page">
         <h1 class="mb-1">Home</h1>
-        <div>Welcome to my-sharedo {{auth.name}}</div>
+        <div>Welcome to my-sharedo {{profile.name}}</div>
     </div>
 </template>
 
 
 <script>
-import implicit from "../service/implicit";
+import {profile} from "../service/profile";
 
 export default 
 {
@@ -15,7 +15,7 @@ export default
     data()
     {
         return {
-            auth: implicit.auth
+            profile: profile
         }
     }
 };

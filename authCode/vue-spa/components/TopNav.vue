@@ -9,7 +9,7 @@
             </h1>
         </div>
         <div className="navbar-group right">
-            {{ auth.name || "Who are you?" }}
+            {{ profile.name || "Who are you?" }}
         </div>
     </nav>
 
@@ -30,16 +30,15 @@
 <script>
 import Link from "./Link.vue";
 import TopNavItem from "./TopNavItem.vue";
-
-import implicit from "../service/implicit";
+import {profile} from "../service/profile";
 
 export default {
     components: { Link, TopNavItem },
     data()
     {
         return {
-            auth: implicit.auth,
-            open: false
+            open: false,
+            profile: profile
         };
     },
     computed:

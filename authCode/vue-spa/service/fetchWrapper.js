@@ -1,32 +1,63 @@
-import implicit from "./implicit";
+import { auth, redirectToLogin, getNewTokens } from "./authcode";
+
+function fetchAttempt(url, request, resolve, reject, attempt)
+{
+    fetch(url, request).then(
+        response =>
+        {
+            if (!response.ok)
+            {
+                if (response.status === 401)
+                {
+                    if (attempt === 1)
+                    {
+                        console.warn("First attempt 401 at " + url + " will try to obtain new tokens");
+                        getNewTokens().then(
+                            newAccessToken =>
+                            {
+                                console.log("Retrying " + url);
+                                request.headers["Authorization"] = `Bearer ${newAccessToken}`;
+                                fetchAttempt(url, request, resolve, reject, attempt + 1);
+                            },
+                            () =>
+                            {
+                                console.warn("Could not obtain new tokens, redirecting to login");
+                                //redirectToLogin();
+                            });
+                        return;
+                    }
+                    else
+                    {
+                        console.warn("Attempt " + attempt + " 401 at " + url + ", redirecting to login");
+                        //redirectToLogin();
+                        return;
+                    }
+                }
+
+                // Other status - reject outright
+                reject(response.statusText);
+                return;
+            }
+
+            resolve(response.json())
+        },
+        err => 
+        {
+            reject(err);
+        });
+}
 
 function doFetch(url, request, resolve, reject)
 {
-    fetch(url, request).then(response =>
-    {
-        if (!response.ok)
-        {
-            if( response.status === 401 )
-            {
-                implicit.redirectToLogin();
-            }
-            reject(response.statusText);
-            return;
-        }
-
-        resolve(response.json())
-    }, err => 
-    {
-        reject(err);
-    });
+    return fetchAttempt(url, request, resolve, reject, 1);
 }
 
 export function get(url)
 {
     return new Promise((resolve, reject) =>
     {
-        var token = implicit.auth.token;
-        if (!token) reject("Not authorised");
+        var token = auth.accessToken;
+        if (!token) reject();
 
         var request =
         {
@@ -47,7 +78,7 @@ export function post(url, body)
 {
     return new Promise((resolve, reject) =>
     {
-        var token = implicit.auth.token;
+        var token = auth.accessToken;
         if (!token) reject("Not authorised");
 
         var request =

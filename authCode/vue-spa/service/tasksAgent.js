@@ -1,6 +1,6 @@
 import settings from "../settings";
 import {post} from "./fetchWrapper";
-import implicit from "./implicit";
+import {profile} from "./profile";
 
 function getMyTasks()
 {
@@ -22,7 +22,7 @@ function getMyTasks()
             {
                 myScope:
                 {
-                    ownerIds:[implicit.auth.userId],
+                    ownerIds:[profile.userId],
                     primary: true,
                     secondary: false
                 }
@@ -32,7 +32,7 @@ function getMyTasks()
         [
             { path: "reference" },
             { path: "title" },
-            { path: "taskDueDate.date" }
+            { path: "taskDueDate.date.utc.value" } 
         ]
     });
 }

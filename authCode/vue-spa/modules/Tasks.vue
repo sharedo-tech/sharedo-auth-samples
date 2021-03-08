@@ -50,7 +50,7 @@ export default
                 ({
                     reference: t.data.reference,
                     title: t.data.title,
-                    due: new Date(t.data["taskDueDate.date"]).toLocaleString()
+                    due: new Date(t.data["taskDueDate.date.utc.value"]).toLocaleString()
                 }));
                 this.totalCount = data.totalCount;
                 this.loaded = true;

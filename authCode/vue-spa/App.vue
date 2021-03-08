@@ -2,8 +2,10 @@
 import {h} from "vue";
 import {auth} from "./service/authcode";
 
+import AppAuthorised from "./AppAuthorised.vue";
+
 const NotAuthorised = { template: "<p>You are not authorised</p>"};
-const Authorised = { template: "<p>SHOW APP</p>"};
+
 
 export default 
 {
@@ -17,7 +19,7 @@ export default
     {
         viewComponent()
         {
-            return auth.accessToken ? Authorised : NotAuthorised;             
+            return auth.accessToken ? AppAuthorised : NotAuthorised;             
         }
     },
     render()
@@ -26,3 +28,4 @@ export default
     }
 };
 </script>
+

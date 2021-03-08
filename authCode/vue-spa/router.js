@@ -22,8 +22,8 @@ const router =
 
     startWatching()
     {
-        if( watching ) return;
-        watching = true;
+        if( this.watching ) return;
+        this.watching = true;
         
         window.addEventListener("popstate", () =>
         {

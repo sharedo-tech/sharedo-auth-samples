@@ -23,40 +23,44 @@ export function redirectToLogin()
     window.location.href = url;
 };
 
-function getTokensFromStorage()
-{
-    var at = localStorage.getItem("_at");
-    var rt = localStorage.getItem("_rt");
-    if( at ) auth.accessToken = at;
-    if( rt ) auth.refreshToken = rt;
-}
-
 export function clearTokens()
 {
     updateTokens(null, null);
 }
 
+function getTokensFromStorage()
+{
+    var at = sessionStorage.getItem("_at");
+    var rt = sessionStorage.getItem("_rt");
+    if( at ) auth.accessToken = at;
+    if( rt ) auth.refreshToken = rt;
+}
+
 export function updateTokens(access, refresh)
 {
+    // Note: Here we're also saving tokens to session storage
+    // Note: so a reload doesn't require obtaining tokens again.
+    // Note: Normally, we wouldn't do this without acknowleding the
+    // Note: risk of storing the tokens in the browser.
     if( access )
     {
-        localStorage.setItem("_at", access);
+        sessionStorage.setItem("_at", access);
         auth.accessToken = access;
     }
     else
     {
-        localStorage.removeItem("_at");
+        sessionStorage.removeItem("_at");
         auth.accessToken = null;
     }
 
     if( refresh )
     {
-        localStorage.setItem("_rt", refresh);
+        sessionStorage.setItem("_rt", refresh);
         auth.refreshToken = refresh;
     }
     else
     {
-        localStorage.removeItem("_rt");
+        sessionStorage.removeItem("_rt");
         auth.refreshToken = null;
     }
 }
@@ -67,8 +71,6 @@ export function logout()
     clearTokens();
     return Promise.resolve();
 }
-
-window.logout = logout;
 
 function getQueryParams()
 {
@@ -137,6 +139,59 @@ function receiveCode()
     });
 };
 
+export function getNewTokens()
+{
+    return new Promise((resolve, reject) =>
+    {
+        console.log("Requesting new access token");
+        if( !auth.refreshToken )
+        {
+            console.warn("No refresh token available");
+            reject();
+            return;
+        }
+
+        // Request a new access token
+        var url = `${settings.identity}/connect/token`;
+        var request =
+        {
+            method: "POST",
+            cache: "no-cache",
+            headers:
+            {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "client_id=" + settings.clientId +
+                "&client_secret=" + settings.clientSecret +
+                "&grant_type=refresh_token" +
+                "&scope=sharedo+offline_access" +
+                "&refresh_token=" + auth.refreshToken
+        };
+
+        fetch(url, request).then(response =>
+        {
+            if (!response.ok)
+            {
+                reject(response.status + " Could not obtain new tokens " + response.statusText);
+                return;
+            }
+
+            response.json().then(data =>
+            {
+                console.log("Got a new access token");
+                var newAccessToken = data["access_token"];
+                var newRefreshToken = data["refresh_token"];
+                updateTokens(newAccessToken, newRefreshToken);
+                resolve(newAccessToken);
+            });
+        }, err => 
+        {
+            reject(err);
+        });
+    });
+}
+
 export function initialise()
 {
     return new Promise((resolve, reject) =>
@@ -144,12 +199,15 @@ export function initialise()
         // Are we receiving a code response?
         if (window.location.pathname.toLowerCase() === "/oauthreply")
         {
-            resolve(receiveCode());
+            receiveCode().then(() =>
+            {
+                resolve();
+            });
             return;
         };
 
-        // No - check existing tokens and redirect if necessary
-        // Do we have a token in storage?
+        // Note: Here we're loading tokens from session storage as a complete
+        // Note: example. Normally we wouldn't store tokens at all except in memory
         getTokensFromStorage();
         if( auth.accessToken && auth.refreshToken )
         {
